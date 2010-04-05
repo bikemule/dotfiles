@@ -12,8 +12,9 @@
 ;; This is the location on Ubuntu
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-goodies-el/color-theme.el")
 (require 'color-theme)
+(require 'zenburn) ; http://www.emacswiki.org/emacs/zenburn.el
 (setq color-theme-is-global t)
-(color-theme-charcoal-black)
+(color-theme-zenburn)
 
 
 ;; ido
@@ -27,12 +28,12 @@
     ido-use-url-at-point t
 )
 
-;; Chris Poyzer's modifications
+;; Chris Poyzer's Python modifications
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq standard-indent 1)		; more python tab fixing
 
-; fix tabing for python
+; fix tabbing for python
 (defun my-pystuff ()
   (setq tab-width 4
         py-indent-offset 4
@@ -52,6 +53,23 @@
 
 (show-paren-mode 1)			; highlight matching parens
 
+; show col # in mode line
+(column-number-mode 1)			
+
+;; Backup files
+(setq 
+     backup-by-copying t      ; don't clobber symlinks
+     ;; Save all backup files in this directory.
+     backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/")))
+     delete-old-versions t
+     kept-new-versions 6
+     kept-old-versions 2
+     version-control t        ; use versioned backups
+)
+
+;; Python
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (require 'pycomplete)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
@@ -66,12 +84,13 @@
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 
-
 (setq ipython-command "/usr/local/bin/ipython")
 (require 'ipython)
 
 (require 'auto-install)
 
+;; Emacs auto-customization
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
