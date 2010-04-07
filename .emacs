@@ -89,6 +89,18 @@
 
 (require 'auto-install)
 
+;; yasnippet
+;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/vendor/yasnippet")
+(require 'yasnippet) ;; not yasnippet-bundle
+
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/vendor/yasnippet/snippets")
+
+
+
+
 ;; Emacs auto-customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
