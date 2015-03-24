@@ -1,35 +1,22 @@
-; load Pymacs and other vendor dir extensions
-; Does this work?
-(add-to-list 'load-path "~/.emacs.d")
-(add-to-list 'load-path "~/.emacs.d/vendor")
-(progn (cd "~/.emacs.d/vendor")
-       (normal-top-level-add-subdirs-to-load-path))
+(setq visible-bell t)
 
+;Emacs 24 color themes
+(load-theme 'deeper-blue)
 
-;; color-theme
-;;;;;;;;;;;;;;;;;;
-
-;; This is the location on Ubuntu
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-goodies-el/color-theme.el")
-(require 'color-theme)
-(require 'zenburn) ; http://www.emacswiki.org/emacs/zenburn.el
-(setq color-theme-is-global t)
-(color-theme-zenburn)
-
+(package-initialize)
 
 ;; ido
-;;;;;;;;;
 
 (require 'ido)
 (ido-mode t)
-(setq 
+(setq
     ido-enable-flex-matching t		; Allows matching of any chars in any order
-    ido-use-filename-at-point t
-    ido-use-url-at-point t
+    ido-use-filename-at-point 'guess
+    ido-use-url-at-point 'guess
+    ido-default-file-method 'selected-window
 )
 
 ;; Chris Poyzer's Python modifications
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq standard-indent 1)		; more python tab fixing
 
@@ -42,9 +29,6 @@
 
 (add-hook 'python-mode-hook 'my-pystuff)
 
-;; Misc additional stuff
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; For server mode
 (server-start)
 
@@ -54,7 +38,7 @@
 (show-paren-mode 1)			; highlight matching parens
 
 ; show col # in mode line
-(column-number-mode 1)			
+(column-number-mode 1)
 
 ;; Backup files
 (setq 
@@ -67,52 +51,59 @@
      version-control t        ; use versioned backups
 )
 
+(require 'flycheck)
 ;; Python
-;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'pycomplete)
-(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-(autoload 'python-mode "python-mode" "Python editing mode." t)
-(autoload 'pymacs-load "pymacs" nil t)
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(setq interpreter-mode-alist(cons '("python" . python-mode)
-                             interpreter-mode-alist))
+(autoload 'python-mode "python-mode" "Python Mode." t)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
-;; Ropemacs - May be able to put this in the autoload list above
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+; PHP
 
-(setq ipython-command "/usr/local/bin/ipython")
-(require 'ipython)
+(add-to-list 'auto-mode-alist '("\\.ctp\\.php\\'" . web-mode))
 
-(require 'auto-install)
+
+; The following two functions are from http://truongtx.me/2014/07/22/setup-php-development-environment-in-emacs/
+
+(flycheck-define-checker my-php
+  "A PHP syntax checker using the PHP command line interpreter.
+
+See URL `http://php.net/manual/en/features.commandline.php'."
+  :command ("php" "-l" "-d" "error_reporting=E_ALL" "-d" "display_errors=1"
+            "-d" "log_errors=0" source)
+  :error-patterns
+  ((error line-start (or "Parse" "Fatal" "syntax") " error" (any ":" ",") " "
+          (message) " in " (file-name) " on line " line line-end))
+  :modes (php-mode php+-mode web-mode))
+
+(defun my-setup-php ()
+  ;; enable web mode
+  (web-mode)
+
+  ;; make these variables local
+  (make-local-variable 'web-mode-code-indent-offset)
+  (make-local-variable 'web-mode-markup-indent-offset)
+  (make-local-variable 'web-mode-css-indent-offset)
+
+  ;; set indentation, can set different indentation level for different code type
+  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+
+  (flycheck-select-checker my-php)
+  (flycheck-mode t))
 
 ;; yasnippet
-;;;;;;;;;;;;;;
+(require 'yasnippet)
+(yas-global-mode 1)
 
-(add-to-list 'load-path "~/.emacs.d/vendor/yasnippet")
-(require 'yasnippet) ;; not yasnippet-bundle
+(require 'sr-speedbar)
 
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/vendor/yasnippet/snippets")
+(require 'nyan-mode)
+(nyan-mode)
 
-
-
-
-;; Emacs auto-customization
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(x-select-enable-clipboard t))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+; To fix annoyingly fast scrolling w/ touchpad on OS X
+; From http://www.emacswiki.org/emacs/SmoothScrolling
+; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
