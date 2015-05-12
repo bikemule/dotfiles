@@ -1,7 +1,27 @@
-(setq visible-bell t)
+;;; package --- Not really a package
 
-;Emacs 24 color themes
+;;; Commentary:
+
+;;; Code:
+(setq visible-bell t)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+;;Emacs 24 color themes
 (load-theme 'deeper-blue)
+
+(setq debug-on-error t)
+
+;; MELPA
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
@@ -22,6 +42,8 @@
 
 ; fix tabbing for python
 (defun my-pystuff ()
+  (flycheck-mode)
+  (which-function-mode)
   (setq tab-width 4
         py-indent-offset 4
         indent-tabs-mode nil
@@ -51,20 +73,16 @@
      version-control t        ; use versioned backups
 )
 
-(require 'flycheck)
-;; Python
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/sbin")
 
+;; Python
 (autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
-; PHP
-
-(add-to-list 'auto-mode-alist '("\\.ctp\\.php\\'" . web-mode))
-
-
 ; The following two functions are from http://truongtx.me/2014/07/22/setup-php-development-environment-in-emacs/
-
+(require 'flycheck)
 (flycheck-define-checker my-php
   "A PHP syntax checker using the PHP command line interpreter.
 
@@ -78,7 +96,10 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 
 (defun my-setup-php ()
   ;; enable web mode
-  (web-mode)
+  ;; Disabled because it loses a lot of useful funcitonality:
+  ;;   Can't go to function end/beginnning, goes to opening/closing tag instead.
+  
+  ;(web-mode)
 
   ;; make these variables local
   (make-local-variable 'web-mode-code-indent-offset)
@@ -90,20 +111,52 @@ See URL `http://php.net/manual/en/features.commandline.php'."
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
 
-  (flycheck-select-checker my-php)
+  ;(flycheck-select-checker my-php)
   (flycheck-mode t))
 
+
+(add-hook 'php-mode-hook 'my-setup-php)
+
+; PHP
+(add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.ctp\\'" . php-mode))  ; Cake template files
+
+; Jedi
+(autoload 'jedi:setup "jedi" nil t)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
 ;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
+;(yas-global-mode 1)
+
+(nyan-mode)
+
+(add-hook 'after-init-hook 
+	  (lambda () (load-theme 'hc-zenburn t)))
+
+(require 'golden-ratio)
+(setq golden-ratio-exclude-modes '("Speedbar-mode"))
 
 (require 'sr-speedbar)
-
-(require 'nyan-mode)
-(nyan-mode)
+(setq sr-speedbar-skip-other-window-p 1)
 
 ; To fix annoyingly fast scrolling w/ touchpad on OS X
 ; From http://www.emacswiki.org/emacs/SmoothScrolling
 ; scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flycheck-display-errors-delay 0.05)
+ '(flycheck-python-flake8-executable "/usr/local/bin/flake8")
+ '(flycheck-python-pylint-executable "/usr/local/bin/pylint")
+ '(nyan-bar-length 12))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
