@@ -1,0 +1,7 @@
+[user]
+	name = Michael Buell
+	email = mikebuell@gmail.com
+[pull]
+	default = current
+[push]
+	default = current
