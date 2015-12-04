@@ -5,3 +5,5 @@
 	default = current
 [push]
 	default = current
+[core]
+	excludesfile = /Users/mike/.gitignore
