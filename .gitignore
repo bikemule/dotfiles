@@ -76,3 +76,10 @@ target/
 ehthumbs.db
 Thumbs.db
 
+# Useless folder preview files 
+Desktop.ini
+
+# Node
+node_modules
+
+
