@@ -12,7 +12,6 @@
 (load-theme 'deeper-blue)
 
 (setq debug-on-error t)
-
 ;; MELPA
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
@@ -77,9 +76,9 @@
 (add-to-list 'exec-path "/usr/local/sbin")
 
 ;; Python
-(autoload 'python-mode "python-mode" "Python Mode." t)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+;(autoload 'python-mode "python-mode" "Python Mode." t)
+;(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+;(add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 ; The following two functions are from http://truongtx.me/2014/07/22/setup-php-development-environment-in-emacs/
 (require 'flycheck)
@@ -122,9 +121,9 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 (add-to-list 'auto-mode-alist '("\\.ctp\\'" . php-mode))  ; Cake template files
 
 ; Jedi
-(autoload 'jedi:setup "jedi" nil t)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+;(autoload 'jedi:setup "jedi" nil t)
+;(add-hook 'python-mode-hook 'jedi:setup)
+;(setq jedi:complete-on-dot t)
 
 ;; yasnippet
 ;(yas-global-mode 1)
