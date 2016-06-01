@@ -152,7 +152,8 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  '(flycheck-display-errors-delay 0.05)
  '(flycheck-python-flake8-executable "/usr/local/bin/flake8")
  '(flycheck-python-pylint-executable "/usr/local/bin/pylint")
- '(nyan-bar-length 12))
+ '(nyan-bar-length 12)
+ '(show-trailing-whitespace t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
