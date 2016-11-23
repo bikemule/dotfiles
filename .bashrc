@@ -10,6 +10,9 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
+# Docker setup
+eval `docker-machine env 2>/dev/null`
+
 alias ll="ls -lAh"
 alias moon="curl wttr\.in/Moon"  # Get the current phase of the moon
 alias weather="curl wttr\.in"    # Get weather w/ auto geolocation

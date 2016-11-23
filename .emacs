@@ -8,12 +8,17 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
-;;Emacs 24 color themes
+;; org-mode
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
+;; Emacs 24 color themes
 (load-theme 'deeper-blue)
 
 (setq debug-on-error t)
 ;; MELPA
-(require 'package) ;; You might already have this line
+(require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives
@@ -25,21 +30,20 @@
 (package-initialize)
 
 ;; ido
-
 (require 'ido)
 (ido-mode t)
 (setq
-    ido-enable-flex-matching t		; Allows matching of any chars in any order
+    ido-enable-flex-matching t  ; Allows matching of any chars in any order
     ido-use-filename-at-point 'guess
     ido-use-url-at-point 'guess
     ido-default-file-method 'selected-window
 )
 
-;; Chris Poyzer's Python modifications
+;; Python
 
-(setq standard-indent 1)		; more python tab fixing
-
-; fix tabbing for python
+;; Not sure why this is first, but maybe it needs to be?
+(setq standard-indent 1)  ; more python tab fixing
+;; fix tabbing for python
 (defun my-pystuff ()
   (flycheck-mode)
   (which-function-mode)
@@ -61,8 +65,14 @@
 ; show col # in mode line
 (column-number-mode 1)
 
+;; Autosave files in Emacs dir rather than cluttering the file's folder
+(setq auto-save-file-name-transforms
+      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+
 ;; Backup files
-(setq 
+(setq
+     version-control t
      backup-by-copying t      ; don't clobber symlinks
      ;; Save all backup files in this directory.
      backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/")))
@@ -97,7 +107,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
   ;; enable web mode
   ;; Disabled because it loses a lot of useful funcitonality:
   ;;   Can't go to function end/beginnning, goes to opening/closing tag instead.
-  
+
   ;(web-mode)
 
   ;; make these variables local
@@ -130,7 +140,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 
 (nyan-mode)
 
-(add-hook 'after-init-hook 
+(add-hook 'after-init-hook
 	  (lambda () (load-theme 'hc-zenburn t)))
 
 (require 'golden-ratio)
@@ -144,6 +154,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 ; scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
