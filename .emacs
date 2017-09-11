@@ -3,6 +3,52 @@
 ;;; Commentary:
 
 ;;; Code:
+
+
+;; Install Packages
+;; ----------------
+
+(setq debug-on-error t)
+;; MELPA
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/") t)
+
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+
+
+;; Ideas from https://github.com/kpurdon/.emacs.d/ and https://realpython.com/blog/python/emacs-the-best-python-editor/
+
+;; List of packages to install
+(defvar my-packages
+  '(better-defaults
+    hc-zenburn-theme
+    elpy
+    flycheck
+    js2-mode
+    json-mode
+    magit
+    markdown-mode
+    markdown-preview-mode
+    py-autopep8
+    smart-mode-line
+    web-mode))
+
+(when (not package-archive-contents)
+  (package-refresh-contents))
+(package-initialize)
+
+(dolist (p my-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+
+;; Basic customization
+;; -------------------
+
 (setq visible-bell t)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
@@ -12,22 +58,6 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
-
-;; Emacs 24 color themes
-(load-theme 'deeper-blue)
-
-(setq debug-on-error t)
-;; MELPA
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-
-(package-initialize)
 
 ;; ido
 (require 'ido)
@@ -41,6 +71,21 @@
 
 ;; Python
 
+(elpy-enable)
+(elpy-use-ipython)
+
+;; use flycheck not flymake with elpy
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; enable autopep8 formatting on save
+(require 'py-autopep8)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;; Old Python stuff
+;; ----------------
+
 ;; Not sure why this is first, but maybe it needs to be?
 (setq standard-indent 1)  ; more python tab fixing
 ;; fix tabbing for python
@@ -52,7 +97,7 @@
         indent-tabs-mode nil
         py-smart-indentation nil))
 
-(add-hook 'python-mode-hook 'my-pystuff)
+; (add-hook 'python-mode-hook 'my-pystuff)
 
 ;; For server mode
 (server-start)
