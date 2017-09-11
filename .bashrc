@@ -3,12 +3,18 @@
 
 # Add maven path to PATH.
 # TODO: Find something like virtualenv for Java
-export PATH=$PATH:$HOME/src/apache-maven-3.3.9/bin
+#export PATH=$PATH:$HOME/src/apache-maven-3.3.9/bin  # Don't really use this anymore
 
 # Homebrew bash completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
+# new version of Homebrew + $PS1 test from github.com/scop/bash-completion
+[[ $PS1 && -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
+
+# old version
+if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
+
+# TODO: add tests for standard other locations of bash-completion dirs
 
 # Docker setup
 eval `docker-machine env 2>/dev/null`
