@@ -23,6 +23,8 @@
 
 ;; Ideas from https://github.com/kpurdon/.emacs.d/ and https://realpython.com/blog/python/emacs-the-best-python-editor/
 
+(package-initialize)
+
 ;; List of packages to install
 (defvar my-packages
   '(better-defaults
@@ -40,7 +42,6 @@
 
 (when (not package-archive-contents)
   (package-refresh-contents))
-(package-initialize)
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -72,7 +73,7 @@
 ;; Python
 
 (elpy-enable)
-(elpy-use-ipython)
+; (elpy-use-ipython)
 
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
