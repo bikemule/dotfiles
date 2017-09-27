@@ -38,7 +38,8 @@
     markdown-preview-mode
     py-autopep8
     smart-mode-line
-    web-mode))
+    web-mode
+    nyan-mode))
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -184,16 +185,17 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 ;; yasnippet
 ;(yas-global-mode 1)
 
+(require 'nyan-mode)
 (nyan-mode)
 
 (add-hook 'after-init-hook
 	  (lambda () (load-theme 'hc-zenburn t)))
 
-(require 'golden-ratio)
-(setq golden-ratio-exclude-modes '("Speedbar-mode"))
+;(require 'golden-ratio)
+;(setq golden-ratio-exclude-modes '("Speedbar-mode"))
 
-(require 'sr-speedbar)
-(setq sr-speedbar-skip-other-window-p 1)
+;(require 'sr-speedbar)
+;(setq sr-speedbar-skip-other-window-p 1)
 
 ; To fix annoyingly fast scrolling w/ touchpad on OS X
 ; From http://www.emacswiki.org/emacs/SmoothScrolling
