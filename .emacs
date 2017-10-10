@@ -25,12 +25,13 @@
 
 (package-initialize)
 
-;; List of packages to install
+;; List of packages to install/are required to run this file
 (defvar my-packages
   '(better-defaults
     hc-zenburn-theme
     elpy
     flycheck
+    jedi
     js2-mode
     json-mode
     magit
@@ -41,9 +42,11 @@
     web-mode
     nyan-mode))
 
+;; Makes sure packages are up to date?
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+;; Install packages if they are not installed.
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
@@ -171,7 +174,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
   (flycheck-mode t))
 
 
-(add-hook 'php-mode-hook 'my-setup-php)
+;(add-hook 'php-mode-hook 'my-setup-php)
 
 ; PHP
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
