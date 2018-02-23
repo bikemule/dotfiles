@@ -16,9 +16,16 @@ fi
 
 # TODO: add tests for standard other locations of bash-completion dirs
 
+# TODO: add test for docker install
 # Docker setup
 eval `docker-machine env 2>/dev/null`
 
+# Fix paging inside Emacs
+if [[ $INSIDE_EMACS ]]; then
+    export PAGER="/bin/cat"
+fi
+
+# Aliases
 alias ll="ls -lAh"
 alias moon="curl wttr\.in/Moon"  # Get the current phase of the moon
 alias weather="curl wttr\.in"    # Get weather w/ auto geolocation

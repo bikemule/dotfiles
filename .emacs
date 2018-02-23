@@ -31,7 +31,6 @@
     hc-zenburn-theme
     elpy
     flycheck
-    jedi
     js2-mode
     json-mode
     magit
@@ -85,6 +84,7 @@
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; enable autopep8 formatting on save
+;; TODO: Doesn't seem to install autopep8 by default, causing an error on any save.
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
@@ -211,11 +211,9 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flycheck-display-errors-delay 0.05)
- '(flycheck-python-flake8-executable "/usr/local/bin/flake8")
- '(flycheck-python-pylint-executable "/usr/local/bin/pylint")
- '(nyan-bar-length 12)
- '(show-trailing-whitespace t))
+ '(package-selected-packages
+   (quote
+    (jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
