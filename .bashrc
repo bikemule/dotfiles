@@ -10,9 +10,9 @@
 [[ $PS1 && -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
 
 # old version
-if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
+# if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+#    . $(brew --prefix)/etc/bash_completion
+# fi
 
 # TODO: add tests for standard other locations of bash-completion dirs
 
@@ -29,3 +29,4 @@ fi
 alias ll="ls -lAh"
 alias moon="curl wttr\.in/Moon"  # Get the current phase of the moon
 alias weather="curl wttr\.in"    # Get weather w/ auto geolocation
+alias ec="emacsclient -nc"       # Open an actual window for emacs and don't wait
