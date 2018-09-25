@@ -1,14 +1,22 @@
 ;;; package --- Not really a package
+;;; emacs.d
 
 ;;; Commentary:
 
+;;; Not sure where I got the idea for these package headers or why I only put
+;;; these here.
+
 ;;; Code:
 
-;; Turn on if there are any errors.
+;; Turn on if there are any errors. Doesn't need to be on.
 ;; (setq debug-on-error t)
 
 ;; Install Packages
 ;; ----------------
+
+;; This was an attempt to get py-autopep8 working. Can't remember if it worked?
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/sbin")
 
 ;; MELPA
 (require 'package)
@@ -28,7 +36,8 @@
 
 ;; List of packages to install/are required to run this file
 (defvar my-packages
-  '(better-defaults
+  '(academic-phrases
+    better-defaults
     hc-zenburn-theme
     elpy
     flycheck
@@ -40,15 +49,16 @@
     py-autopep8
     smart-mode-line
     web-mode
-    nyan-mode))
+    nyan-mode
+    exec-path-from-shell))
 
 ;; Makes sure packages are up to date?
-(when (not package-archive-contents)
+(unless package-archive-contents
   (package-refresh-contents))
 
 ;; Install packages if they are not installed.
 (dolist (p my-packages)
-  (when (not (package-installed-p p))
+  (unless (package-installed-p p)
     (package-install p)))
 
 ;; Basic customization
@@ -106,7 +116,7 @@
 ; (add-hook 'python-mode-hook 'my-pystuff)
 
 ;; For server mode
-(unless (server-running-p) (server-start))
+;; (unless (server-running-p) (server-start))
 
 ;; Desktop
 (desktop-save-mode 1)
@@ -132,9 +142,6 @@
      kept-old-versions 2
      version-control t        ; use versioned backups
 )
-
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "/usr/local/sbin")
 
 ;; Python
 ;(autoload 'python-mode "python-mode" "Python Mode." t)
@@ -213,7 +220,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
+   '(academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
