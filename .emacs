@@ -50,7 +50,8 @@
     smart-mode-line
     web-mode
     nyan-mode
-    exec-path-from-shell))
+    exec-path-from-shell
+    sr-speedbar))
 
 ;; Makes sure packages are up to date?
 (unless package-archive-contents
@@ -64,10 +65,45 @@
 ;; Basic customization
 ;; -------------------
 
+;; Emacs internal config
+;; ---------------------
+
+;; For server mode
+;; (unless (server-running-p) (server-start))
+
+;; Desktop
+(desktop-save-mode 1)  ; Save windows/buffers
+
+(show-paren-mode 1)			; highlight matching parens
+(column-number-mode 1)  ; show col # in mode line
 (setq visible-bell t)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+
+;; Autosave files in Emacs dir rather than cluttering the file's folder
+(setq auto-save-file-name-transforms
+      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+;; Backup files
+(setq
+     version-control t
+     backup-by-copying t      ; don't clobber symlinks
+     ;; Save all backup files in this directory.
+     backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/")))
+     delete-old-versions t
+     kept-new-versions 6
+     kept-old-versions 2
+     version-control t        ; use versioned backups
+)
+
+;; For fun
+(require 'nyan-mode)
+(nyan-mode)
+
+(add-hook 'after-init-hook
+	  (lambda () (load-theme 'hc-zenburn t)))
+
 
 ;; org-mode
 (define-key global-map "\C-cl" 'org-store-link)
@@ -85,6 +121,7 @@
 )
 
 ;; Python
+;; ------
 
 (elpy-enable)
 ; (elpy-use-ipython)
@@ -102,8 +139,10 @@
 ;; Old Python stuff
 ;; ----------------
 
+;; I have a feeling this wasn't being used or was being overriden by elpy
 ;; Not sure why this is first, but maybe it needs to be?
-(setq standard-indent 1)  ; more python tab fixing
+;;(setq standard-indent 1)  ; more python tab fixing
+
 ;; fix tabbing for python
 (defun my-pystuff ()
   (flycheck-mode)
@@ -115,38 +154,8 @@
 
 ; (add-hook 'python-mode-hook 'my-pystuff)
 
-;; For server mode
-;; (unless (server-running-p) (server-start))
-
-;; Desktop
-(desktop-save-mode 1)
-
-(show-paren-mode 1)			; highlight matching parens
-
-; show col # in mode line
-(column-number-mode 1)
-
-;; Autosave files in Emacs dir rather than cluttering the file's folder
-(setq auto-save-file-name-transforms
-      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
-
-
-;; Backup files
-(setq
-     version-control t
-     backup-by-copying t      ; don't clobber symlinks
-     ;; Save all backup files in this directory.
-     backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/")))
-     delete-old-versions t
-     kept-new-versions 6
-     kept-old-versions 2
-     version-control t        ; use versioned backups
-)
-
-;; Python
-;(autoload 'python-mode "python-mode" "Python Mode." t)
-;(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-;(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+;; PHP - Ew. Old, too
+;; ------------------
 
 ; The following two functions are from http://truongtx.me/2014/07/22/setup-php-development-environment-in-emacs/
 (require 'flycheck)
@@ -188,6 +197,9 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.ctp\\'" . php-mode))  ; Cake template files
 
+;; Old, probably useless stuff
+;; ---------------------------
+
 ; Jedi
 ;(autoload 'jedi:setup "jedi" nil t)
 ;(add-hook 'python-mode-hook 'jedi:setup)
@@ -196,11 +208,6 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 ;; yasnippet
 ;(yas-global-mode 1)
 
-(require 'nyan-mode)
-(nyan-mode)
-
-(add-hook 'after-init-hook
-	  (lambda () (load-theme 'hc-zenburn t)))
 
 ;(require 'golden-ratio)
 ;(setq golden-ratio-exclude-modes '("Speedbar-mode"))
@@ -220,7 +227,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
+   '(sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
