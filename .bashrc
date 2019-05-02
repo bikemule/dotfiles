@@ -16,9 +16,10 @@
 
 # TODO: add tests for standard other locations of bash-completion dirs
 
-# TODO: add test for docker install
 # Docker setup
-eval `docker-machine env 2>/dev/null`
+if command -v docker-machine 1>/dev/null 2>&1; then
+    eval `docker-machine env 2>/dev/null`
+fi
 
 # Fix paging inside Emacs
 if [[ $INSIDE_EMACS ]]; then
@@ -30,3 +31,17 @@ alias ll="ls -lAh"
 alias moon="curl wttr\.in/Moon"  # Get the current phase of the moon
 alias weather="curl wttr\.in"    # Get weather w/ auto geolocation
 alias ec="emacsclient -nc"       # Open an actual window for emacs and don't wait
+
+
+# makes pyenv-virtualenvwrapper
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# pyenv-virtualenv plugin
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
