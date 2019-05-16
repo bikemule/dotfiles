@@ -132,9 +132,11 @@
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; enable autopep8 formatting on save
-;; TODO: Doesn't seem to install autopep8 by default, causing an error on any save.
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+;; Tried debugging for hours to get this work and keep getting this error on every save.
+;; /usr/local/Cellar/emacs/HEAD-4ad214f/Emacs.app/Contents/MacOS/Emacs: /usr/local/bin/autopep8: No such file or directory
+
+;; (require 'py-autopep8)
+;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 ;; Old Python stuff
 ;; ----------------
