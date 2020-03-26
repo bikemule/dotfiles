@@ -14,6 +14,11 @@
 ;; Install Packages
 ;; ----------------
 
+;; Required for use-package
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (add-to-list 'load-path "<path where use-package is installed>")
+  (require 'use-package))
 
 ;; MELPA
 (require 'package)
@@ -229,7 +234,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
+   '(use-package pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
