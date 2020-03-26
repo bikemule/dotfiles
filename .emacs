@@ -29,7 +29,8 @@
 
 ;; Ideas from https://github.com/kpurdon/.emacs.d/ and https://realpython.com/blog/python/emacs-the-best-python-editor/
 
-(package-initialize)
+;; Emacs > 27 will auto-initialize packages. This was causing a warning when evaluating Python code with Elpy
+(unless package--initialized (package-initialize t))
 
 ;; List of packages to install/are required to run this file
 (defvar my-packages
