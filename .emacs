@@ -14,9 +14,6 @@
 ;; Install Packages
 ;; ----------------
 
-;; This was an attempt to get py-autopep8 working. Can't remember if it worked?
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "/usr/local/sbin")
 
 ;; MELPA
 (require 'package)
@@ -51,7 +48,8 @@
     web-mode
     nyan-mode
     exec-path-from-shell
-    sr-speedbar))
+    sr-speedbar
+    pyenv-mode))
 
 ;; Makes sure packages are up to date?
 (unless package-archive-contents
@@ -124,6 +122,7 @@
 ;; ------
 
 (elpy-enable)
+(pyenv-mode)
 ; (elpy-use-ipython)
 
 ;; use flycheck not flymake with elpy
@@ -229,7 +228,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
+   '(pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
