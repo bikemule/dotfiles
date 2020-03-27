@@ -105,10 +105,15 @@
      version-control t        ; use versioned backups
 )
 
+;; Visuals
+;; -------
+
+
 ;; For fun
 (require 'nyan-mode)
 (nyan-mode)
 
+;; Theme 
 (add-hook 'after-init-hook
 	  (lambda () (load-theme 'hc-zenburn t)))
 
