@@ -110,6 +110,7 @@
 ;; ido
 (require 'ido)
 (ido-mode t)
+(ido-everywhere t)
 (setq
     ido-enable-flex-matching t  ; Allows matching of any chars in any order
     ido-use-filename-at-point 'guess
