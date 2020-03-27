@@ -41,27 +41,7 @@
 ;; Emacs > 27 will auto-initialize packages. This was causing a warning when evaluating Python code with Elpy
 (unless package--initialized (package-initialize t))
 
-;; List of packages to install/are required to run this file
-(defvar my-packages
-  '(academic-phrases
-    better-defaults
-    hc-zenburn-theme
-    elpy
-    flycheck
-    js2-mode
-    json-mode
-    magit
-    markdown-mode
-    markdown-preview-mode
-    py-autopep8
-    smart-mode-line
-    web-mode
-    nyan-mode
-    exec-path-from-shell
-    sr-speedbar
-    pyenv-mode))
-
-;; Makes sure packages are up to date?
+;; Makes sure list of package-list-packages is up to date
 (unless package-archive-contents
   (package-refresh-contents))
 
