@@ -46,9 +46,9 @@
   (package-refresh-contents))
 
 ;; Install packages if they are not installed.
-(dolist (p my-packages)
-  (unless (package-installed-p p)
-    (package-install p)))
+;(dolist (p my-packages)
+;  (unless (package-installed-p p)
+;    (package-install p)))
 
 ;; Basic customization
 ;; -------------------
