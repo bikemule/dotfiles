@@ -1,5 +1,9 @@
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# [ -z "$PS1" ] && return
+
+if [ -f ~/.bash_aliases ]; then
+    source  ~/.bash_aliases
+fi
 
 # Add maven path to PATH.
 # TODO: Find something like virtualenv for Java
@@ -25,14 +29,6 @@ fi
 if [[ $INSIDE_EMACS ]]; then
     export PAGER="/bin/cat"
 fi
-
-# Aliases
-alias ll="ls -lAh"
-alias moon="curl wttr\.in/Moon"  # Get the current phase of the moon
-alias weather="curl wttr\.in"    # Get weather w/ auto geolocation
-alias ec="emacsclient -nc"       # Open an actual window for emacs and don't wait
-alias g="git"                    # Shortcut for git
-
 
 # makes pyenv-virtualenvwrapper
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
