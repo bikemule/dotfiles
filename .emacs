@@ -157,8 +157,15 @@
   (pyenv-mode)
   :bind
   ("C-x p e" . pyenv-activate-current-project))
-
 ;; END RAKAN.ME
+
+;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
+;; BEGIN aiguiofer
+(use-package blacken
+    :hook (python-mode . blacken-mode)
+    :config
+    (setq blacken-line-length '88))
+;; END aguiofer
 
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
@@ -263,7 +270,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(git-gutter use-package pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
+   '(blacken git-gutter use-package pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
