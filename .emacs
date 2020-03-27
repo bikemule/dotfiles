@@ -16,8 +16,12 @@
 
 ;; Required for use-package
 (eval-when-compile
+  ;; The following commented lines are from the use-package README on Github,
+  ;; seems unnecessary because the package dirs are autoloaded?
+  
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
-  (add-to-list 'load-path "<path where use-package is installed>")
+  ;;(add-to-list 'load-path "<path where use-package is installed>")
+
   (require 'use-package))
 
 ;; MELPA
