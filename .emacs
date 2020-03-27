@@ -75,7 +75,6 @@
 
 ;; Backup files
 (setq
-     version-control t
      backup-by-copying t      ; don't clobber symlinks
      ;; Save all backup files in this directory.
      backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/")))
