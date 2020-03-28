@@ -141,8 +141,7 @@
     ; fix for MacOS, see https://github.com/jorgenschaefer/elpy/issues/1550
     (setq elpy-shell-echo-output nil)
     (setq elpy-rpc-python-command "python3")
-    (setq elpy-rpc-timeout 2)
-    )
+    (setq elpy-rpc-timeout 2))
 
 (use-package python
   :mode ("\\.py" . python-mode)
