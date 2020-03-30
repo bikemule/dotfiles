@@ -46,9 +46,9 @@
   (package-refresh-contents))
 
 ;; Install packages if they are not installed.
-(dolist (p my-packages)
-  (unless (package-installed-p p)
-    (package-install p)))
+;(dolist (p my-packages)
+;  (unless (package-installed-p p)
+;    (package-install p)))
 
 ;; Basic customization
 ;; -------------------
@@ -75,7 +75,6 @@
 
 ;; Backup files
 (setq
-     version-control t
      backup-by-copying t      ; don't clobber symlinks
      ;; Save all backup files in this directory.
      backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/")))
@@ -111,6 +110,7 @@
 ;; ido
 (require 'ido)
 (ido-mode t)
+(ido-everywhere t)
 (setq
     ido-enable-flex-matching t  ; Allows matching of any chars in any order
     ido-use-filename-at-point 'guess
@@ -134,7 +134,14 @@
 	      ("M-." . elpy-goto-definition)
 	      ("M-," . pop-tag-mark))
     :config
-    (setq elpy-rpc-backend "jedi"))
+    (setq elpy-rpc-backend "jedi")
+
+    ;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    ; fix for MacOS, see https://github.com/jorgenschaefer/elpy/issues/1550
+    (setq elpy-shell-echo-output nil)
+    (setq elpy-rpc-python-command "python3")
+    (setq elpy-rpc-timeout 2))
 
 (use-package python
   :mode ("\\.py" . python-mode)
@@ -151,7 +158,38 @@
   :bind
   ("C-x p e" . pyenv-activate-current-project))
 
+(defun pyenv-activate-current-project ()
+  "Automatically activates pyenv version if .python-version file exists."
+  (interactive)
+  (let ((python-version-directory (locate-dominating-file (buffer-file-name) ".python-version")))
+    (if python-version-directory
+        (let* ((pyenv-version-path (f-expand ".python-version" python-version-directory))
+               (pyenv-current-version (s-trim (f-read-text pyenv-version-path 'utf-8))))
+          (pyenv-mode-set pyenv-current-version)
+          (message (concat "Setting virtualenv to " pyenv-current-version))))))
+
+(defvar pyenv-current-version nil nil)
+
+(defun pyenv-init()
+  "Initialize pyenv's current version to the global one."
+  (let ((global-pyenv (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv global"))))
+    (message (concat "Setting pyenv version to " global-pyenv))
+    (pyenv-mode-set global-pyenv)
+    (setq pyenv-current-version global-pyenv)))
+
+(add-hook 'after-init-hook 'pyenv-init)
 ;; END RAKAN.ME
+
+;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
+;; BEGIN aiguiofer
+(use-package blacken
+    :hook (python-mode . blacken-mode)
+    :config
+    (setq blacken-line-length '88))
+;; END aguiofer
+
+;; Package to jump to last change in a buffer
+(require 'goto-last-change)
 
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
@@ -226,6 +264,26 @@ See URL `http://php.net/manual/en/features.commandline.php'."
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.ctp\\'" . php-mode))  ; Cake template files
 
+(require 'restclient)
+
+;; smex
+;; ------
+
+;; Useful smex commands
+;; C-h f, while Smex is active, runs describe-function on the currently selected command.
+;; M-. jumps to the definition of the selected command.
+;; C-h w shows the key bindings for the selected command. (Via where-is.)
+
+(require 'smex) ; Not needed if you use package.el
+(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+					; when Smex is auto-initialized on its first run.
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+
 ;; Old, probably useless stuff
 ;; ---------------------------
 
@@ -256,7 +314,7 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(git-gutter use-package pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
+   '(smex goto-last-change company-restclient blacken git-gutter use-package pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
