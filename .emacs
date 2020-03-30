@@ -97,6 +97,10 @@
 	  (lambda () (load-theme 'hc-zenburn t)))
 
 
+;; Make URLs clickable
+(add-hook 'after-init-hook
+	  (lambda () (goto-address-mode)))
+
 ;; Git
 ;; ---
 
