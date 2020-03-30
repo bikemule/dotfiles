@@ -320,8 +320,8 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  '(package-selected-packages
    '(smex goto-last-change company-restclient blacken git-gutter use-package pyenv-mode sr-speedbar academic-phrases exec-path-from-shell jedi nyan-mode web-mode smart-mode-line py-autopep8 markdown-preview-mode magit json-mode js2-mode hc-zenburn-theme flycheck elpy better-defaults))
  ;; Hide git-gutter when there are no changes
- '(git-gutter:hide-gutter t)
- )
+ '(git-gutter:hide-gutter t))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
