@@ -8,8 +8,8 @@
 
 ;;; Code:
 
-;; Turn on if there are any errors. Doesn't need to be on.
-;; (setq debug-on-error t)
+;; Turn on to debug loading errors, turn off at the end of file
+(setq debug-on-error t)
 
 ;; Install Packages
 ;; ----------------
@@ -328,3 +328,5 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq debug-on-error nil)
