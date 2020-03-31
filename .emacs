@@ -17,25 +17,35 @@
 ;; Turn on to debug loading errors, turn off at the end of file
 (setq debug-on-error t)
 
-;; Install Packages
-;; ----------------
+;; Package setup/init
+;; ------------------
 
-;; Required for use-package
-(eval-when-compile
-  ;; The following commented lines are from the use-package README on Github,
-  ;; seems unnecessary because the package dirs are autoloaded?
-  
-  ;; Following line is not needed if use-package.el is in ~/.emacs.d
-  ;;(add-to-list 'load-path "<path where use-package is installed>")
+;; Mostly taken from:
+;; http://cachestocaches.com/2015/8/getting-started-use-package/
+;; https://github.com/CachesToCaches/getting_started_with_use_package/blob/master/init-use-package.el
 
-  (require 'use-package))
-
-;; MELPA
 (require 'package)
+
+(setq package-enable-at-startup nil)  ;; Don't load packages immediately
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+
+;; Emacs > 27 will auto-initialize packages. This was causing a warning when evaluating Python code with Elpy
+(unless package--initialized (package-initialize t))(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
+
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
@@ -43,18 +53,6 @@
 
 
 ;; Ideas from https://github.com/kpurdon/.emacs.d/ and https://realpython.com/blog/python/emacs-the-best-python-editor/
-
-;; Emacs > 27 will auto-initialize packages. This was causing a warning when evaluating Python code with Elpy
-(unless package--initialized (package-initialize t))
-
-;; Makes sure list of package-list-packages is up to date
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Install packages if they are not installed.
-;(dolist (p my-packages)
-;  (unless (package-installed-p p)
-;    (package-install p)))
 
 ;; Basic customization
 ;; -------------------
