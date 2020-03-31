@@ -8,6 +8,12 @@
 
 ;;; Code:
 
+
+;; For calculating load time
+;; This and end code copied from notnarb/dotfiles who got it from jwiegley
+
+(defconst emacs-start-time (current-time))
+
 ;; Turn on to debug loading errors, turn off at the end of file
 (setq debug-on-error t)
 
@@ -330,3 +336,10 @@ See URL `http://php.net/manual/en/features.commandline.php'."
  )
 
 (setq debug-on-error nil)
+
+(add-hook 'after-init-hook
+	  `(lambda ()
+	     (let ((elapsed
+		    (float-time (time-subtract (current-time) emacs-start-time))))
+	       (message "Loading %s...done (%.3fs) [after-init]"
+			,load-file-name elapsed))))
