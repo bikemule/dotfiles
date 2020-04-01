@@ -39,7 +39,7 @@
 
 
 ;; Emacs > 27 will auto-initialize packages. This was causing a warning when evaluating Python code with Elpy
-(unless package--initialized (package-initialize t))(package-initialize)
+(unless package--initialized (package-initialize t))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
