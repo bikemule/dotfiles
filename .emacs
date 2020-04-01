@@ -147,7 +147,7 @@
     (setq elpy-rpc-backend "jedi")
 
     ;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
     ; fix for MacOS, see https://github.com/jorgenschaefer/elpy/issues/1550
     (setq elpy-shell-echo-output nil)
     (setq elpy-rpc-python-command "python3")
@@ -202,9 +202,9 @@
 (require 'goto-last-change)
 
 ;; use flycheck not flymake with elpy
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; (when (require 'flycheck nil t)
+;;  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;;  (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; enable autopep8 formatting on save
 ;; Tried debugging for hours to get this work and keep getting this error on every save.
