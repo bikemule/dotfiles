@@ -43,9 +43,12 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
 
+;; Necessary to use :diminish and :bind with use-package
+(use-package diminish
+  :ensure t)
+(use-package bind-key
+  :ensure t)
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
