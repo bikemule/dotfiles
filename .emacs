@@ -66,12 +66,16 @@
 ;; For server mode
 ;; (unless (server-running-p) (server-start))
 
-;; Desktop
-(desktop-save-mode 1)  ; Save windows/buffers
 
-(show-paren-mode 1)			; highlight matching parens
+;; Not that into desktop mode anymore
+;; Desktop
+;; (desktop-save-mode 1)  ; Save windows/buffers
+
+(show-paren-mode 1)  ; highlight matching parens
 (column-number-mode 1)  ; show col # in mode line
 (setq visible-bell t)
+
+;; Get rid of extraneous UI
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -104,7 +108,7 @@
 	  (lambda () (load-theme 'hc-zenburn t)))
 
 
-;; Make URLs clickable
+;; Make URLs clickable, Emacs built-in func
 (add-hook 'after-init-hook
 	  (lambda () (goto-address-mode)))
 
