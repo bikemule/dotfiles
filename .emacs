@@ -46,8 +46,10 @@
 
 ;; Necessary to use :diminish and :bind with use-package
 (use-package diminish
+  :defer t
   :ensure t)
 (use-package bind-key
+  :defer t
   :ensure t)
 
 (when (< emacs-major-version 24)
@@ -139,24 +141,26 @@
 ;; Below was taken from http://rakan.me/emacs/python-dev-with-emacs-and-pyenv/
 ;; BEGIN RAKAN.ME
 (use-package elpy
-    :init
-    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-    :bind (:map elpy-mode-map
+  :defer t
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+  :bind (:map elpy-mode-map
 	      ("<M-left>" . nil)
 	      ("<M-right>" . nil)
 	      ("<M-S-left>" . elpy-nav-indent-shift-left)
 	      ("<M-S-right>" . elpy-nav-indent-shift-right)
 	      ("M-." . elpy-goto-definition)
 	      ("M-," . pop-tag-mark))
-    :config
-    (setq elpy-rpc-backend "jedi")
+  :config
+  (setq elpy-rpc-backend "jedi")
 
-    ;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
-    ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    ; fix for MacOS, see https://github.com/jorgenschaefer/elpy/issues/1550
-    (setq elpy-shell-echo-output nil)
-    (setq elpy-rpc-python-command "python3")
-    (setq elpy-rpc-timeout 2))
+  ;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
+  ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+					; fix for MacOS, see https://github.com/jorgenschaefer/elpy/issues/1550
+  (setq elpy-shell-echo-output nil)
+  (setq elpy-rpc-python-command "python3")
+  (setq elpy-rpc-timeout 2))
 
 (use-package python
   :mode ("\\.py" . python-mode)
@@ -165,6 +169,8 @@
   (elpy-enable))
 
 (use-package pyenv-mode
+  :defer t
+  :ensure t
   :init
   (add-to-list 'exec-path "~/.pyenv/shims")
   (setenv "WORKON_HOME" "~/.pyenv/versions/")
@@ -198,9 +204,11 @@
 ;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
 ;; BEGIN aiguiofer
 (use-package blacken
-    :hook (python-mode . blacken-mode)
-    :config
-    (setq blacken-line-length '88))
+  :defer t
+  :ensure t
+  :hook (python-mode . blacken-mode)
+  :config
+  (setq blacken-line-length '88))
 ;; END aguiofer
 
 ;; Package to jump to last change in a buffer
