@@ -113,11 +113,12 @@
   :config
   (nyan-mode))
 
-;; Doesn't seem to be working with Dockerized silex/emacs, which is 26.3
+;; TODO: Doesn't seem to be working with Dockerized emacs
 ;; Theme 
-(use-package hc-zenburn-theme
+(use-package gruvbox-theme
+  :ensure t
   :config
-  (load-theme 'hc-zenburn t))
+  (load-theme 'gruvbox t))
 
 ;; Make URLs clickable, Emacs built-in func
 (add-hook 'after-init-hook
@@ -127,10 +128,14 @@
 ;; ---
 
 (use-package git-gutter
+  :ensure t
+  :commands global-git-gutter-mode
   :config
   ;; Hide git-gutter when there are no changes
   (setq git-gutter:hide-gutter t)
+  (setq git-gutter:lighter " GG")
   (global-git-gutter-mode t))
+
 
 ;; org-mode
 (define-key global-map "\C-cl" 'org-store-link)
@@ -138,15 +143,17 @@
 (setq org-log-done t)
 
 ;; ido
-(require 'ido)
-(ido-mode t)
-(ido-everywhere t)
-(setq
+(use-package ido
+  :ensure t
+  :init
+  (setq
     ido-enable-flex-matching t  ; Allows matching of any chars in any order
     ido-use-filename-at-point 'guess
     ido-use-url-at-point 'guess
-    ido-default-file-method 'selected-window
-)
+    ido-default-file-method 'selected-window)
+  :config
+  (ido-mode t)
+  (ido-everywhere t))
 
 ;; Python
 ;; ------
@@ -225,7 +232,8 @@
 ;; END aguiofer
 
 ;; Package to jump to last change in a buffer
-(use-package goto-last-change)
+(use-package goto-last-change
+  :ensure t)
 
 ;; use flycheck not flymake with elpy
 ;; (when (require 'flycheck nil t)
@@ -257,48 +265,8 @@
 
 ; (add-hook 'python-mode-hook 'my-pystuff)
 
-;; PHP - Ew. Old, too
-;; ------------------
-
-; The following two functions are from http://truongtx.me/2014/07/22/setup-php-development-environment-in-emacs/
-(require 'flycheck)
-(flycheck-define-checker my-php
-  "A PHP syntax checker using the PHP command line interpreter.
-
-See URL `http://php.net/manual/en/features.commandline.php'."
-  :command ("php" "-l" "-d" "error_reporting=E_ALL" "-d" "display_errors=1"
-            "-d" "log_errors=0" source)
-  :error-patterns
-  ((error line-start (or "Parse" "Fatal" "syntax") " error" (any ":" ",") " "
-          (message) " in " (file-name) " on line " line line-end))
-  :modes (php-mode php+-mode web-mode))
-
-(defun my-setup-php ()
-  ;; enable web mode
-  ;; Disabled because it loses a lot of useful funcitonality:
-  ;;   Can't go to function end/beginnning, goes to opening/closing tag instead.
-
-  ;(web-mode)
-
-  ;; make these variables local
-  (make-local-variable 'web-mode-code-indent-offset)
-  (make-local-variable 'web-mode-markup-indent-offset)
-  (make-local-variable 'web-mode-css-indent-offset)
-
-  ;; set indentation, can set different indentation level for different code type
-  (setq web-mode-code-indent-offset 4)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2)
-
-  ;(flycheck-select-checker my-php)
-  (flycheck-mode t))
-
-
-;(add-hook 'php-mode-hook 'my-setup-php)
-
-; PHP
-(add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.ctp\\'" . php-mode))  ; Cake template files
+(use-package flycheck
+  :ensure t)
 
 (use-package restclient
   :ensure t
