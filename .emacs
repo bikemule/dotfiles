@@ -173,6 +173,9 @@
 	      ("M-." . elpy-goto-definition)
 	      ("M-," . pop-tag-mark))
   :config
+  ;; Set RPC Python to that of project
+  ;; This requires setting current pyenv, which should?? be done by pyenv-init
+  (setq elpy-rpc-virtualenv-path 'current)
   (setq elpy-rpc-backend "jedi")
 
   ;; From https://github.com/aiguofer/dotfiles/blob/master/user/.emacs.d/init.el
